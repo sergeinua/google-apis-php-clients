@@ -36,10 +36,47 @@ class CustomSearch extends AbstractApi
     const PARAMETER_SAFETY_LEVEL = 'safe';
     const PARAMETER_START_INDEX = 'start';
     
+    const PARAMETER_SEARCH_TYPE = 'searchType';	
+    const PARAMETER_IMG_SIZE = 'imgSize';	
+    const PARAMETER_IMG_COLOR_TYPE= 'imgColorType';
+    const PARAMETER_IMG_DOMINANT_COLOR= 'imgDominantColor';
+	const PARAMETER_IMG_TYPE= 'imgType';
+	
     const SAFETY_LEVEL_HIGH = 'high';
     const SAFETY_LEVEL_MEDIUM = 'medium';
     const SAFETY_LEVEL_OFF = 'off';
-    
+
+	const SEARCH_TYPE_IMAGE= 'image';
+
+	const IMG_SIZE_ICON= 'icon';
+	const IMG_SIZE_SMALL= 'small';
+	const IMG_SIZE_MEDIUM= 'medium';
+	const IMG_SIZE_LARGE= 'large';
+	const IMG_SIZE_XLARGE= 'xlarge';
+	const IMG_SIZE_XXLARGE= 'xxlarge';    
+	const IMG_SIZE_HUGE= 'huge';
+	
+	const IMG_COLOR_TYPE_MONO= 'mono'; // (black and white)
+    const IMG_COLOR_TYPE_GRAY= 'gray'; // (grayscale)
+    const IMG_COLOR_TYPE_COLOR= 'color'; // (color)
+
+	const IMG_DOMINANT_COLOR_YELLOW= 'yellow';
+	const IMG_DOMINANT_COLOR_GREEN= 'green';
+	const IMG_DOMINANT_COLOR_TEAL= 'teal';
+	const IMG_DOMINANT_COLOR_BLUE= 'blue';
+	const IMG_DOMINANT_COLOR_PURPLE= 'purple';
+	const IMG_DOMINANT_COLOR_PINK= 'pink';
+	const IMG_DOMINANT_COLOR_WHITE= 'white';
+	const IMG_DOMINANT_COLOR_GRAY= 'gray';
+	const IMG_DOMINANT_COLOR_BLACK= 'black';
+	const IMG_DOMINANT_COLOR_BROWN= 'brown';
+ 
+ 	const IMG_TYPE_FACE= 'face';
+ 	const IMG_TYPE_CLIPART= 'clipart';
+ 	const IMG_TYPE_LINEART= 'lineart';
+ 	const IMG_TYPE_NEWS= 'news';
+ 	const IMG_TYPE_PHOTO= 'photo';
+
     const REGEX_LANGUAGE_RESTRICTION = "/^lang_(ar|bg|ca|cs|da|de|el|en|es|et|fi|fr|hr|hu|id|is|it|iw|ja|ko|lt|lv|nl|no|pl|pt|ro|ru|sk|sl|sr|sv|tr|zh\-CN|zh\-TW)$/";
     const REGEX_URL = "~^(http|https)://(([a-z0-9-]+\.)+[a-z]{2,6}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:[0-9]+)?(/?|/\S+)$~ix";
 
@@ -87,6 +124,32 @@ class CustomSearch extends AbstractApi
      * @var integer
      */
     protected $startIndex;
+
+	/**
+     * @var string
+     */
+    protected $searchType;
+
+	/**
+     * @var string
+     */
+    protected $imgSize;
+    
+    /**
+     * @var string
+     */
+    protected $imgColorType;
+    
+    /**
+     * @var string
+     */
+    protected $imgDominantColor;
+    
+    /**
+     * @var string
+     */
+    protected $imgType;
+    
 
     /**
      * Constructs a new Google CustomSearch API client.
@@ -349,25 +412,159 @@ class CustomSearch extends AbstractApi
         return $this->startIndex;
     }
     
-    /**
-     * Sets the start index.
+ 	/**
+     * Gets the search type.
      *
-     * @param integer $startIndex
+     * @return string
+     */
+    public function getSearchType()
+    {
+        return $this->searchType;
+    }
+        
+    /**
+     * Sets search type.
+     *
+     * @param string $searchType
      *
      * @return CustomSearch
      *
      * @throws \InvalidArgumentException
      */
-    public function setStartIndex($startIndex = null)
+    public function setSearchType($searchType = null)
     {
-        if($startIndex !== null && !(is_int($startIndex) && $startIndex >= 1 && $startIndex <= (101 - $this->getNumberOfResults()))) {
-            throw new \InvalidArgumentException(sprintf('Invalid start index "%s". Please provide an integer between 1 and (101 - number of results).', $startIndex));
-        }
+		if($searchType !== null && !(!is_bool($searchType) && in_array($searchType, array(self::SEARCH_TYPE_IMAGE)))) {
+            throw new \InvalidArgumentException(sprintf('Invalid search type "%s". Please provide "image".', $searchType));
+        }        
         
-        $this->startIndex = $startIndex;
+        $this->searchType = $searchType;
         return $this;
     }
 
+	 /**
+     * Gets the image size.
+     *
+     * @return string
+     */
+    public function getImgSize()
+    {
+        return $this->imgSize;
+    }
+        
+    /**
+     * Sets image size.
+     *
+     * @param string $imgSize
+     *
+     * @return CustomSearch
+     *
+     * @see IMG_SIZE_ICON, IMG_SIZE_SMALL, IMG_SIZE_MEDIUM, IMG_SIZE_LARGE, IMG_SIZE_XLARGE, IMG_SIZE_XXLARGE, IMG_SIZE_HUGE
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setImgSize($imgSize = null)
+    {
+		if($imgSize !== null && !(!is_bool($imgSize) && in_array($imgSize, array(self::IMG_SIZE_ICON, self::IMG_SIZE_SMALL, self::IMG_SIZE_MEDIUM, self::IMG_SIZE_LARGE, self::IMG_SIZE_XLARGE, self::IMG_SIZE_XXLARGE, self::IMG_SIZE_HUGE)))) {
+            throw new \InvalidArgumentException(sprintf('Invalid image size "%s". Please provide either one of this values: icon, small, medium, large, xlarge, xxlarge, huge.', $imgSize));
+        }        
+        
+        $this->imgSize = $imgSize;
+        return $this;
+    }
+    
+    /**
+     * Gets the image color type.
+     *
+     * @return string
+     */
+    public function getImgColorType()
+    {
+        return $this->imgColorType;
+    }
+        
+    /**
+     * Sets image color type.
+     *
+     * @param string $imgColorType
+     *
+     * @return CustomSearch
+     *
+     * @see IMG_COLOR_TYPE_MONO, IMG_COLOR_TYPE_GRAY, IMG_COLOR_TYPE_COLOR
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setImgColorType($imgColorType = null)
+    {
+		if($imgColorType !== null && !(!is_bool($imgColorType) && in_array($imgColorType, array(self::IMG_COLOR_TYPE_MONO, self::IMG_COLOR_TYPE_GRAY, self::IMG_COLOR_TYPE_COLOR)))) {
+            throw new \InvalidArgumentException(sprintf('Invalid image color type "%s". Please provide either one of this values: mono, gray, color.', $imgColorType));
+        }        
+        
+        $this->imgColorType = $imgColorType;
+        return $this;
+    }
+    
+    /**
+     * Gets the image dominant color.
+     *
+     * @return string
+     */
+    public function getImgDominantColor()
+    {
+        return $this->imgDominantColor;
+    }
+        
+    /**
+     * Sets image dominant color.
+     *
+     * @param string $imgDominantColor
+     *
+     * @return CustomSearch
+     *
+     * @see IMG_DOMINANT_COLOR_YELLOW, IMG_DOMINANT_COLOR_GREEN, IMG_DOMINANT_COLOR_TEAL, IMG_DOMINANT_COLOR_BLUE, IMG_DOMINANT_COLOR_PURPLE, IMG_DOMINANT_COLOR_PINK, IMG_DOMINANT_COLOR_WHITE, IMG_DOMINANT_COLOR_GRAY, IMG_DOMINANT_COLOR_BLACK, IMG_DOMINANT_COLOR_BROWN 
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setImgDominantColor($imgDominantColor = null)
+    {
+		if($imgDominantColor !== null && !(!is_bool($imgDominantColor) && in_array($imgDominantColor,array(self::IMG_DOMINANT_COLOR_YELLOW, self::IMG_DOMINANT_COLOR_GREEN, self::IMG_DOMINANT_COLOR_TEAL, self::IMG_DOMINANT_COLOR_BLUE, self::IMG_DOMINANT_COLOR_PURPLE, self::IMG_DOMINANT_COLOR_PINK, self::IMG_DOMINANT_COLOR_WHITE, self::IMG_DOMINANT_COLOR_GRAY, self::IMG_DOMINANT_COLOR_BLACK, self::IMG_DOMINANT_COLOR_BROWN)))) {    
+            throw new \InvalidArgumentException(sprintf('Invalid image dominant color type "%s". Please provide either one of this values: yellow, green, teal, blue, purple, pink, white, gray, black, brown.', $imgDominantColor));
+        }        
+        
+        $this->imgDominantColor = $imgDominantColor;
+        return $this;
+    }
+
+    /**
+     * Gets the image type.
+     *
+     * @return string
+     */
+    public function getImgType()
+    {
+        return $this->imgType;
+    }
+        
+    /**
+     * Sets image type.
+     *
+     * @param string $imgType
+     *
+     * @return CustomSearch
+     *
+     * @see IMG_TYPE_FACE, IMG_TYPE_LINEART, IMG_TYPE_NEWS, IMG_TYPE_PHOTO 
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function setImgType($imgType = null)
+    {
+		if($imgType !== null && !(!is_bool($imgType) && in_array($imgType,array(self::IMG_TYPE_CLIPART, self::IMG_TYPE_FACE, self::IMG_TYPE_LINEART, self::IMG_TYPE_NEWS, self::IMG_TYPE_PHOTO)))) {    
+            throw new \InvalidArgumentException(sprintf('Invalid image type "%s". Please provide either one of this values: clipart, face, lineart, news, photo.', $imgType));
+        }        
+        
+        $this->imgType = $imgType;
+        return $this;
+    }
+    
     /**
      * Validates that all parameters are valid for for the API request.
      * 
@@ -419,6 +616,12 @@ class CustomSearch extends AbstractApi
             self::PARAMETER_SAFETY_LEVEL                  => $this->getSafetyLevel(),
             self::PARAMETER_START_INDEX                   => $this->getStartIndex(),
             self::PARAMETER_FILTER_DUPLICATES             => $this->getFilterDuplicates(),
+            self::PARAMETER_FILTER_DUPLICATES             => $this->getFilterDuplicates(),
+            self::PARAMETER_SEARCH_TYPE					  => $this->getSearchType(),	
+            self::PARAMETER_IMG_SIZE					  => $this->getImgSize(),	
+            self::PARAMETER_IMG_COLOR_TYPE				  => $this->getImgColorType(),	
+    		self::PARAMETER_IMG_DOMINANT_COLOR			  => $this->getImgDominantColor(),	
+			self::PARAMETER_IMG_TYPE					  => $this->getImgType(),	
         );
         
         if($this->getCustomSearchEngineId() !== null) {

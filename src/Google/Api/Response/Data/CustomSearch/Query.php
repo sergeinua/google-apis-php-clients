@@ -85,6 +85,29 @@ class Query extends AbstractData
      */
     protected $sort;
     
+     /** @var string
+     */
+    protected $searchType;
+    
+     /** @var string
+     */
+    protected $imgSize;
+    
+    /**
+     * @var string
+     */
+    protected $imgColorType;
+    
+    /**
+     * @var string
+     */
+    protected $imgDominantColor;
+    
+    /**
+     * @var string
+     */
+    protected $imgType;
+    
     /**
      * Gets the description.
      *
@@ -213,5 +236,56 @@ class Query extends AbstractData
     public function getSortedBy()
     {
         return $this->sort;
+    }
+    
+    
+    /**
+     * Gets the search type ('image' or 'normal' for dafault search).
+     *
+     * @return string
+     */
+    public function getSearchType()
+    {
+        return $this->searchType;
+    }
+    
+     /**
+     * Gets the img size (icon, small, medium, large, xlarge, xxlarge, huge)
+     *
+     * @return string
+     */
+    public function getImgSize()
+    {
+        return $this->imgSize;
+    }
+    
+    /**
+     * Gets the image color type.
+     *
+     * @return string
+     */
+    public function getImgColorType()
+    {
+        return $this->imgColorType;
+    }   
+  
+    /**
+     * Gets the image dominant color.
+     *
+     * @return string
+     */
+    public function getImgDominantColor()
+    {
+        return $this->imgDominantColor;
+    }
+        
+    /**
+     * Gets the image type.
+     *
+     * @return string
+     */
+    public function getImgType()
+    {
+        return $this->imgType;
     }
 }
