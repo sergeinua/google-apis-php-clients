@@ -1,10 +1,5 @@
 {
-
-
-
-
     "name": "sergeinua/google-apis-php-clients",
-
     "version": "1.0.0",
     "authors": [
         {
@@ -12,5 +7,10 @@
             "email": "sergei.nikonov@yahoo.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Google\\Api\\": "src/"
+        }
+    }
 }
