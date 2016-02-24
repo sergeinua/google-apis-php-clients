@@ -1,5 +1,11 @@
 {
+
+
+
+
     "name": "sergeinua/google-apis-php-clients",
+
+    "version": "1.0.0",
     "authors": [
         {
             "name": "sergei",
