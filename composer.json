@@ -1,0 +1,10 @@
+{
+    "name": "sergeinua/google-apis-php-clients",
+    "authors": [
+        {
+            "name": "sergei",
+            "email": "sergei.nikonov@yahoo.com"
+        }
+    ],
+    "require": {}
+}
