@@ -7,10 +7,7 @@
             "email": "sergei.nikonov@yahoo.com"
         }
     ],
-    "require": 
-    {
-        "yiisoft/yii2-composer": "dev-master"
-    },
+    "require": {},
     "autoload": {
         "psr-4": {
             "Google\\Api\\": "src/"
